@@ -19,16 +19,6 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        val resolver = contentResolver
-        val cursor = resolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // データの種類
-            null, // 項目(null = 全項目)
-            null, // フィルタ条件(null = フィルタなし)
-            null, // フィルタ用パラメータ
-            null // ソート (null ソートなし)
-        )
-
         // Android 6.0以降の場合
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // パーミッションの許可状態を確認する
@@ -44,6 +34,16 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
             getContentsInfo()
         }
 
+
+        val resolver = contentResolver
+        val cursor = resolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // データの種類
+            null, // 項目(null = 全項目)
+            null, // フィルタ条件(null = フィルタなし)
+            null, // フィルタ用パラメータ
+            null // ソート (null ソートなし)
+        )
+
         next_button.setOnClickListener(this)
         back_button.setOnClickListener(this)
         play_button.setOnClickListener(this)
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         if (v.id == R.id.next_button) {
             Log.d("UI_PARTS", "進むボタンをタップしました")
 
-            //cursor.moveToNext()
+            cursor.moveToNext()
             //if (cursor.moveToFirst()) {
             //    val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
             //    val id = cursor.getLong(fieldIndex)
