@@ -15,18 +15,19 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
 
     private val PERMISSIONS_REQUEST_CODE = 100
 
-    val resolver = contentResolver
-    val cursor = resolver.query(
-        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // データの種類
-        null, // 項目(null = 全項目)
-        null, // フィルタ条件(null = フィルタなし)
-        null, // フィルタ用パラメータ
-        null // ソート (null ソートなし)
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        val resolver = contentResolver
+        val cursor = resolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // データの種類
+            null, // 項目(null = 全項目)
+            null, // フィルタ条件(null = フィルタなし)
+            null, // フィルタ用パラメータ
+            null // ソート (null ソートなし)
+        )
 
         // Android 6.0以降の場合
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
