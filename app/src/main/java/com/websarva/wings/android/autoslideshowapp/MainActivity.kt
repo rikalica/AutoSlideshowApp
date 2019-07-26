@@ -57,13 +57,13 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         if (v.id == R.id.next_button) {
             Log.d("UI_PARTS", "進むボタンをタップしました")
 
-            cursor!!.moveToNext()
-            if (cursor!!.moveToFirst()) {
+            //cursor!!.moveToNext()
+            //if (cursor!!.moveToFirst()) {
                 val fieldIndex = cursor!!.getColumnIndex(MediaStore.Images.Media._ID)
                 val id = cursor!!.getLong(fieldIndex)
                 val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
                 cursor!!.moveToNext()
-            }
+            //}
         } else if (v.id == R.id.back_button) {
             Log.d("UI_PARTS", "戻るボタンをタップしました")
         } else if (v.id == R.id.play_button) {
