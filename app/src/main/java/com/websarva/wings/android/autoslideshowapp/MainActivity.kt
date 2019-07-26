@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
     private val PERMISSIONS_REQUEST_CODE = 100
 
     var cursor: Cursor? = null
+    var flag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
             null, // フィルタ用パラメータ
             null // ソート (null ソートなし)
         )
+        cursor!!.moveToFirst()
 
         next_button.setOnClickListener(this)
         back_button.setOnClickListener(this)
@@ -57,17 +59,64 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         if (v.id == R.id.next_button) {
             Log.d("UI_PARTS", "進むボタンをタップしました")
 
-            //cursor!!.moveToNext()
-            //if (cursor!!.moveToFirst()) {
+            if(cursor!!.moveToNext()) {
                 val fieldIndex = cursor!!.getColumnIndex(MediaStore.Images.Media._ID)
                 val id = cursor!!.getLong(fieldIndex)
                 val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-                cursor!!.moveToNext()
-            //}
+                Log.d("ANDROID", "URI : " + imageUri.toString())
+                imageView.setImageURI(imageUri)
+            } else {
+                cursor!!.moveToFirst()
+                val fieldIndex = cursor!!.getColumnIndex(MediaStore.Images.Media._ID)
+                val id = cursor!!.getLong(fieldIndex)
+                val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                imageView.setImageURI(imageUri)
+            }
         } else if (v.id == R.id.back_button) {
             Log.d("UI_PARTS", "戻るボタンをタップしました")
+
+            if(cursor!!.moveToPrevious()) {
+                val fieldIndex = cursor!!.getColumnIndex(MediaStore.Images.Media._ID)
+                val id = cursor!!.getLong(fieldIndex)
+                val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                imageView.setImageURI(imageUri)
+                Log.d("ANDROID", "URI : " + imageUri.toString())
+
+            } else {
+                cursor!!.moveToLast()
+                val fieldIndex = cursor!!.getColumnIndex(MediaStore.Images.Media._ID)
+                val id = cursor!!.getLong(fieldIndex)
+                val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                imageView.setImageURI(imageUri)
+            }
         } else if (v.id == R.id.play_button) {
             Log.d("UI_PARTS", "再生/停止ボタンをタップしました")
+
+            if(flag == false) {
+                flag = true
+                do {
+                    if(cursor!!.moveToNext()) {
+                        // indexからIDを取得し、そのIDから画像のURIを取得する
+                        val fieldIndex = cursor!!.getColumnIndex(MediaStore.Images.Media._ID)
+                        val id = cursor!!.getLong(fieldIndex)
+                        val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                        imageView.setImageURI(imageUri)
+                        Log.d("ANDROID", "URI : " + imageUri.toString())
+                    } else {
+                        cursor!!.moveToFirst()
+                        val fieldIndex = cursor!!.getColumnIndex(MediaStore.Images.Media._ID)
+                        val id = cursor!!.getLong(fieldIndex)
+                        val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                        imageView.setImageURI(imageUri)
+                        Log.d("ANDROID", "URI : " + imageUri.toString())
+                    }
+                } while (flag)
+            } else {
+                flag = false
+            }
+
+
+
         }
     }
 
