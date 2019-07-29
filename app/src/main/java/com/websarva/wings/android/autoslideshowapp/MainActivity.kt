@@ -25,15 +25,12 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Android 6.0以降の場合
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // パーミッションの許可状態を確認する
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 // 許可されている
                 getContentsInfo()
             } else {
-
-
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE)
             }
             // Android 5系以下の場合
@@ -49,11 +46,11 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
             null, // フィルタ用パラメータ
             null // ソート (null ソートなし)
         )
-        cursor!!.moveToFirst()
-
-        next_button.setOnClickListener(this)
-        back_button.setOnClickListener(this)
-        play_button.setOnClickListener(this)
+        if(cursor!!.moveToFirst()){
+            next_button.setOnClickListener(this)
+            back_button.setOnClickListener(this)
+            play_button.setOnClickListener(this)
+        }
     }
 
 
