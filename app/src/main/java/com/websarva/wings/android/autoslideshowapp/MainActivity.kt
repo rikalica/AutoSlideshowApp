@@ -38,19 +38,19 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
             getContentsInfo()
         }
 
-        val resolver = contentResolver
-        cursor = resolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // データの種類
-            null, // 項目(null = 全項目)
-            null, // フィルタ条件(null = フィルタなし)
-            null, // フィルタ用パラメータ
-            null // ソート (null ソートなし)
-        )
-        if(cursor!!.moveToFirst()){
-            next_button.setOnClickListener(this)
-            back_button.setOnClickListener(this)
-            play_button.setOnClickListener(this)
-        }
+        //val resolver = contentResolver
+        //cursor = resolver.query(
+            //MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // データの種類
+           // null, // 項目(null = 全項目)
+           // null, // フィルタ条件(null = フィルタなし)
+           // null, // フィルタ用パラメータ
+           // null // ソート (null ソートなし)
+        //)
+        //if(cursor!!.moveToFirst()){
+        //    next_button.setOnClickListener(this)
+        //    back_button.setOnClickListener(this)
+        //    play_button.setOnClickListener(this)
+        //}
     }
 
 
